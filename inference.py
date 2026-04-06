@@ -122,7 +122,7 @@ def run_inference():
     # Initialize OpenAI client
     client = OpenAI(
         base_url=API_BASE_URL,
-        api_key=HF_TOKEN if HF_TOKEN else "dummy-key-for-local"
+        api_key=API_KEY if API_KEY else "dummy-key-for-local"
     )
     
     # Initialize environment
