@@ -1,0 +1,98 @@
+# OpenEnv Specification for SQL Data Analyst Environment
+# Hackathon: Meta x Scaler - OpenEnv Framework
+
+name: sql_analyst
+version: "1.0.0"
+description: >
+  A Reinforcement Learning environment simulating a Data Analyst workspace
+  where an AI agent queries a SQLite database to answer business questions.
+
+tags:
+  - openenv
+  - sql
+  - data-analyst
+  - reinforcement-learning
+
+infrastructure:
+  vcpu: 2
+  memory: 8gb
+  timeout: 1200  # 20 minutes max runtime
+
+entry_point: environment.env:SQLAnalystEnv
+
+models:
+  action: environment.models:Action
+  observation: environment.models:Observation
+  reward: environment.models:Reward
+
+schemas:
+  action:
+    type: object
+    properties:
+      sql_query:
+        type: string
+        description: SQL query to execute against the database
+        nullable: true
+      submit_answer:
+        type: string
+        description: Final answer to submit for grading
+        nullable: true
+    required: []
+    additionalProperties: false
+
+  observation:
+    type: object
+    properties:
+      schema_info:
+        type: string
+        description: Database schema information
+      current_question:
+        type: string
+        description: The current task question to answer
+      last_query_result:
+        type: string
+        description: Result from the last SQL query execution
+      error_message:
+        type: string
+        description: Error message from last action, if any
+    required:
+      - schema_info
+      - current_question
+      - last_query_result
+      - error_message
+
+  reward:
+    type: object
+    properties:
+      value:
+        type: number
+        description: Reward value for the action taken
+    required:
+      - value
+
+endpoints:
+  reset:
+    method: POST
+    path: /reset
+    description: Reset the environment and get initial observation
+    response: observation
+
+  step:
+    method: POST
+    path: /step
+    description: Execute an action and receive observation, reward, done, info
+    request: action
+    response:
+      type: object
+      properties:
+        observation: observation
+        reward: reward
+        done:
+          type: boolean
+        info:
+          type: object
+
+  state:
+    method: GET
+    path: /state
+    description: Get the current internal state of the environment

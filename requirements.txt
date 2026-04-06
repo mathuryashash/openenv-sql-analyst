@@ -1,0 +1,20 @@
+# OpenEnv SQL Analyst Environment Dependencies
+# Optimized for 8GB RAM constraint
+
+# Core framework
+openenv-core>=0.1.0
+
+# Pydantic for typed models
+pydantic>=2.0.0
+
+# OpenAI client for inference
+openai>=1.0.0
+
+# Database (sqlite3 is built-in, no extra deps needed)
+
+# HTTP server dependencies (typically bundled with openenv-core)
+uvicorn>=0.23.0
+fastapi>=0.100.0
+
+# Utilities
+python-dotenv>=1.0.0
