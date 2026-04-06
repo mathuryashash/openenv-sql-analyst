@@ -1,3 +1,12 @@
+---
+title: OpenEnv SQL Analyst
+emoji: 📊
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # SQL Data Analyst Agent
 
 > A production-grade, containerized Reinforcement Learning environment for evaluating LLM-powered Data Analysts on real SQL business intelligence tasks.
